@@ -1,0 +1,21 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy backend to Render
+        run: curl -fsSL "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Deploy frontend to Vercel
+        run: curl -fsSL "${{ secrets.VERCEL_DEPLOY_HOOK }}"

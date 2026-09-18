@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 100
+exclude = ["scripts/seed.py"]
+
+[tool.black]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
